@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>org.romaine</groupId>
+	<artifactId>scores</artifactId>
+	<version>0.1</version>
+	<name>scores</name>
+	<description>App to track game scores</description>
+	<properties>
+		<app.name>${project.name}</app.name>
+		<buildnumber-maven-plugin.version>3.0.0</buildnumber-maven-plugin.version>
+		<java.version>11</java.version>
+		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
+		<github.url>https://github.com/jimmerydad/scores.git</github.url>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>${buildnumber-maven-plugin.version}</version>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>true</doUpdate>
+					<shortRevisionLength>7</shortRevisionLength>
+					<format>${project.version}.{0,number}_{1}</format>
+					<items>
+						<item>buildNumber</item>
+						<item>scmVersion</item>
+					</items>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven-antrun-plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<!--                                Can now just use application.properties-->
+								<!--                                <propertyfile file="src/main/resources/version.properties"-->
+								<!--                                              comment="Git Version Number file">-->
+								<!--                                    &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+								<!--                                    <entry key="app.version" value="${buildNumber}"/>-->
+								<!--                                    &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+								<!--                                    <entry key="git.branch" value="${scmBranch}"/>   &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+								<!--                                    <entry key="buildVersion" value="${buildNumber}"/>-->
+								<!--                                </propertyfile>-->
+								<propertyfile file="src/main/resources/application.properties"
+											  comment="Git Version Number file">
+									<!--suppress UnresolvedMavenProperty -->
+									<entry key="app.version" value="${buildNumber}"/>
+									<!--suppress UnresolvedMavenProperty -->
+									<entry key="git.branch" value="${scmBranch}"/>   <!--suppress UnresolvedMavenProperty -->
+									<entry key="buildVersion" value="${buildNumber}"/>
+								</propertyfile>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-file</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<!--                            TODO    Switch from jar to war when needed-->
+								<!--suppress UnresolvedMavenProperty -->
+								<copy file="target/${project.artifactId}-${project.version}.jar"
+									  tofile="target/${project.artifactId}-${buildNumber}.jar"/>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<scm>
+		<connection>scm:git:${github.url}</connection>
+		<url>${github.url}</url>
+	</scm>
+
+</project>
