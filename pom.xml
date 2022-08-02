@@ -108,15 +108,6 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<!--                                Can now just use application.properties-->
-								<!--                                <propertyfile file="src/main/resources/version.properties"-->
-								<!--                                              comment="Git Version Number file">-->
-								<!--                                    &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
-								<!--                                    <entry key="app.version" value="${buildNumber}"/>-->
-								<!--                                    &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
-								<!--                                    <entry key="git.branch" value="${scmBranch}"/>   &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
-								<!--                                    <entry key="buildVersion" value="${buildNumber}"/>-->
-								<!--                                </propertyfile>-->
 								<propertyfile file="src/main/resources/application.properties"
 											  comment="Git Version Number file">
 									<!--suppress UnresolvedMavenProperty -->
