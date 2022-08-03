@@ -2,8 +2,9 @@ package org.romaine.scores.model.golf;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-
+import lombok.NoArgsConstructor;
+//import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -11,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Data
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class Hole {
     @Id
     @GeneratedValue(strategy = IDENTITY)
