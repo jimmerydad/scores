@@ -4,8 +4,14 @@ import org.romaine.scores.model.Game;
 import org.romaine.scores.model.golf.Course;
 import org.romaine.scores.repository.CourseRepository;
 import org.romaine.scores.repository.GameRepository;
+import org.romaine.scores.util.FileUploadUtil;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +37,21 @@ class GameController {
     Game newGame(@RequestBody Game newGame) {
         return repository.save(newGame);
     }
+
+//    @PostMapping("/profile-picture")
+//    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile imageFile, @ModelAttribute UserDTO requestDto) {
+//        try {
+//            UserDTO created  =userDetailsService.saveImg(requestDto, file.getBytes());
+//            return new ResponseEntity<>(created, HttpStatus.OK);
+//
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//    }
+
+
 
     // Single item
 

@@ -1,5 +1,6 @@
 package org.romaine.scores.model.golf;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,8 @@ public class Hole {
     @Column(nullable = false)
     private byte par;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "course_id")
     private Course course;
