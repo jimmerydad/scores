@@ -1,3 +1,7 @@
+# 0.2.2
+- attachment upload
+- (from https://www.bezkoder.com/spring-boot-upload-file-database/)
+
 # 0.2.1
 - added player repo
 - need to add file upload for images
